@@ -1,0 +1,136 @@
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import "tailwindcss";
+
+/*
+ * AASHA-UAV global theme — Phase 0 scaffold
+ *
+ * One dark base shared by all three portals. Each portal tints the same
+ * `--accent` family via a wrapper class (.portal-user / .portal-police /
+ * .portal-hospital), so every shared component automatically picks up the
+ * correct accent with classes like `bg-accent` / `text-accent`.
+ */
+
+:root {
+  /* Dark base (identical across portals) */
+  --base-950: #090d13;
+  --base-900: #10161f;
+  --base-800: #18202e;
+  --base-700: #232f45;
+
+  --ink-100: #f2f5fa;
+  --ink-300: #c2cbda;
+  --ink-400: #a3adc2;
+  --ink-500: #8a94a8;
+  --ink-600: #757e93;
+
+  /* Default accent (landing page) = emergency-red */
+  --accent: #ff3b47;
+  --accent-strong: #ff7a82;
+  --accent-dim: rgb(255 59 71 / 0.14);
+}
+
+/* User portal — emergency-red */
+.portal-user {
+  --accent: #ff3b47;
+  --accent-strong: #ff7a82;
+  --accent-dim: rgb(255 59 71 / 0.14);
+}
+
+/* Police / Security portal — authority-blue */
+.portal-police {
+  --accent: #3b82f6;
+  --accent-strong: #7aa5ff;
+  --accent-dim: rgb(59 130 246 / 0.14);
+}
+
+/* Hospital Authority portal — medical-teal */
+.portal-hospital {
+  --accent: #14b8a6;
+  --accent-strong: #5eead4;
+  --accent-dim: rgb(20 184 166 / 0.14);
+}
+
+@theme inline {
+  --color-base-950: var(--base-950);
+  --color-base-900: var(--base-900);
+  --color-base-800: var(--base-800);
+  --color-base-700: var(--base-700);
+
+  --color-ink-100: var(--ink-100);
+  --color-ink-300: var(--ink-300);
+  --color-ink-400: var(--ink-400);
+  --color-ink-500: var(--ink-500);
+  --color-ink-600: var(--ink-600);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-dim: var(--accent-dim);
+
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--base-950);
+  color: var(--ink-100);
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Visible keyboard focus (a11y) ----
+   Consistent, high-contrast focus ring in the portal accent colour.
+   Modern browsers draw the outline following the element's border-radius. */
+:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 3px;
+}
+
+/* ---- AASHA-UAV motion utilities ---- */
+
+/* Infinite ops-ticker marquee. The track must contain the sequence twice
+   for a seamless loop. */
+@keyframes aasha-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-aasha-marquee {
+  animation: aasha-marquee 32s linear infinite;
+}
+
+/* Giant ghost display type (outlined, transparent fill) */
+.text-ghost-outline {
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.13);
+  color: transparent;
+}
+
+/* Animated flight-path dash flow (Phase 8: UAV route on the police map) */
+@keyframes aasha-dash-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+.aasha-flow-path {
+  animation: aasha-dash-flow 1.1s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aasha-flow-path {
+    animation: none;
+  }
+}
